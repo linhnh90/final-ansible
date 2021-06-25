@@ -1,0 +1,33 @@
+---
+- name: install apache
+  package: 
+    name: "{{ apache }}"
+    state: present
+
+- name: Install LAMP Packages
+  apt: name={{ item }} update_cache=yes state=latest
+  loop:
+    - 'apache2'
+    - 'mysql-server'
+    - 'python3-pymysql'
+    - 'php'
+    - 'php-mysql'
+    - 'libapache2-mod-php'
+
+- name: copy source file
+  template: 
+    src: "index.php.j2"
+    dest: /var/www/html/index.php
+  notify:
+    - restart apache
+
+- name: ensure apache run
+  service:
+    name: "{{ apache }}"
+    state: started
+
+- name: "UFW - Allow HTTP on port {{ http_port }}"
+  ufw:
+    rule: allow
+    port: "{{ http_port }}"
+    proto: tcp

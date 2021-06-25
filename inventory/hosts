@@ -1,0 +1,11 @@
+[ubuntu]
+ubuntu11 ansible_host=192.168.100.11
+ubuntu12 ansible_host=192.168.100.12
+
+
+[linux:children]
+ubuntu
+
+[myshosts:vars]
+ubuntu
+

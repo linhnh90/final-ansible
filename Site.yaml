@@ -1,0 +1,15 @@
+---
+- name: setup LAMP Web Server
+  hosts: all
+  become: true
+  gather_facts: yes
+  tasks:
+    - name: install Apache Web Server
+      import_role:
+        name: apache_php
+    - name: flush handlers
+      meta: flush_handlers
+    - name: install mysql server
+      import_role:
+        name: mysql
+  

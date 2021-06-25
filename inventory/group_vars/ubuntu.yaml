@@ -1,0 +1,5 @@
+ansible_python_interpreter: /usr/bin/python3
+myshosts: ubuntu
+apache: apache2
+http_port: 80
+mysql_root_password: "123456"
