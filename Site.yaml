@@ -12,11 +12,4 @@
     - name: install mysql server
       import_role:
         name: mysql
-    - name: check the welcome page
-      command: curl "http://{{ inventory_hostname }}"
-      delegate_to: 127.0.0.1
-      register: result
-    - name: display the welcome page
-      debug:
-        msg: "{{ result.content }}"
   

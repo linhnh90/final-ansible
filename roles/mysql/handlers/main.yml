@@ -1,2 +1,8 @@
 ---
-# handlers file for mysql
+- name: insert student data into database  
+  mysql_db: 
+    name: student
+    state: import 
+    target: /tmp/dump.sql 
+    login_user: root 
+    login_password: "{{ mysql_root_password }}"

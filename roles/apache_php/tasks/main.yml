@@ -1,24 +1,42 @@
 ---
-- name: install apache
+- name: Install Apache PHP Packages
   package: 
-    name: "{{ apache }}"
-    state: present
-
-- name: Install LAMP Packages
-  apt: 
     name: "{{ item }}"
     update_cache: yes 
     state: latest
   loop:
     - 'apache2'
     - 'php'
+    - 'php-cli'
     - 'php-mysql'
     - 'libapache2-mod-php'
+
+- name: Create document root
+  file:
+    path: "/var/www/{{ http_host }}"
+    state: directory
+    owner: "{{ app_user }}"
+    mode: '0755'
+
+- name: Set up Apache virtualhost
+  copy:
+    src: "webtest.conf.j2"
+    dest: "/etc/apache2/sites-available/{{ http_conf }}"
+  notify: restart apache
+
+- name: Enable new site
+  shell: /usr/sbin/a2ensite {{ http_conf }}
+  notify: restart apache
+
+- name: Disable default Apache site
+  shell: a2dissite 000-default.conf
+  notify: restart apache
 
 - name: copy source file
   template: 
     src: "index.php.j2"
-    dest: /var/www/html/index.html
+    dest: /var/www/webtest/index.php
+    mode: 0664
   notify:
     - restart apache
 

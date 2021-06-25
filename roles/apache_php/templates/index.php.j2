@@ -1,15 +1,14 @@
 <?php
   try {
-    $conn = new PDO("mysql:host=localhost;dbname=student", "root", "{{ mysql_root_password }}");
+    $conn = new PDO("mysql:host=localhost;dbname=student", "dev", {{ mysql_user_password }} );
 
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     echo 'Connected to the database.<br>';
 
     $sql = 'SELECT name FROM student';
     
-    print "Hello Student:<br>";
     foreach ($conn->query($sql) as $row) {
-        print $row['name'] . "<br>";
+        echo "Student Name:", $row['name'] . "<br>";
     }
     $conn = null;
 

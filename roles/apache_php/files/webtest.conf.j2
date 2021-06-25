@@ -1,0 +1,8 @@
+<VirtualHost *:80>
+    ServerAdmin webmaster@localhost
+    ServerName webtest
+    ServerAlias www.webtest
+    DocumentRoot /var/www/webtest/
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
